@@ -23,7 +23,7 @@ const App = () => {
 
   const handleSumNumbers = () => {
 
-    if(firstNumber === '0'){
+    if(firstNumber === '0') {
         setFirstNumber(String(currentNumber));
         setCurrentNumber('0')
         setOperation('+')
@@ -49,30 +49,65 @@ const App = () => {
 
   }
 
-  const handleEquals = () => {
-
-    if(firstNumber !== '0' && operation !== '' && currentNumber !== '0'){
-        switch(operation){
-          case '+':
-            handleSumNumbers();
-            break;
-          case '-':
-            handleMinusNumbers();
-            break;
-          default: 
-            break;
-        }
+  const handleMultiplyNumbers = () => {
+    if (firstNumber === '0') {
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0')
+      setOperation('*')
+    } else {
+      const product = Number(firstNumber) * Number(currentNumber);
+      setCurrentNumber(String(product))
+      setOperation('')
     }
-
   }
+
+  const handleDivideNumbers = () => {
+    if (firstNumber === '0') {
+      setFirstNumber(String(currentNumber));
+      setCurrentNumber('0')
+      setOperation('/')
+    } else {
+      if (currentNumber !== '0') {
+        const quotient = Number(firstNumber) / Number(currentNumber);
+        setCurrentNumber(String(quotient))
+      } else {
+        setCurrentNumber('-1') 
+      }
+      setOperation('')
+    }
+  }
+
+
+  const handleEquals = () => {
+    if (firstNumber !== '0' && operation !== '' && currentNumber !== '0') {
+      switch (operation) {
+        case '+':
+          handleSumNumbers();
+          break;
+        case '-':
+          handleMinusNumbers();
+          break;
+        case '*':
+          handleMultiplyNumbers();
+          break;
+        case '/':
+          handleDivideNumbers();
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+
 
   return (
     <Container>
       <Content>
         <Input value={currentNumber}/>
         <Row>
-          <Button label="x"/>
-          <Button label="/"/>
+          <Button label="x" onClick={handleMultiplyNumbers}/>
+          <Button label="/" onClick={handleDivideNumbers}/>
           <Button label="c" onClick={handleOnClear}/>
           <Button label="."/>
         </Row>
